@@ -36,10 +36,14 @@ public class MathGame extends JFrame {
     private JTextField maxNumber;
     private JTextField numOfTasks;
     public JLabel doTasks;
+    //public JButton playAgainButton;
     private JLabel taskOne, taskTwo, taskThree, signOne, signTwo, equalSign;
     private JTextField answer;
     private JButton check;
     private int corrrectAnswers;
+    public JPanel taskPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    public JPanel taskAndAnswer = new JPanel();
+
 
     private ArrayList<JLabel> taskLabels = new ArrayList<>(); // Список для зберігання компонентів кожного прикладу
     private ArrayList<JTextField> answerFields = new ArrayList<>();
@@ -82,19 +86,19 @@ public class MathGame extends JFrame {
 
                 if (checkPos(maxN, tN)) {
                     //ідемо в наступне вікно
-
+                    //MathGame.this.getContentPane().removeAll();
                     tasksFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     setLocationRelativeTo(null);
                     tasksFrame.setSize(500, 400);
 
                     initTwo();
                     generateTask(maxN, tN);
-                    JPanel taskPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                    //JPanel taskPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
                     taskPanel.add(doTasks);
                     tasksFrame.add(taskPanel);
 
-                    JPanel taskAndAnswer = new JPanel();
+                    //    JPanel taskAndAnswer = new JPanel();
                     for (int i = 0; i < taskLabels.size(); i++) { // Додаємо всі компоненти прикладів до контейнера
                         taskAndAnswer.add(taskLabels.get(i));
                         taskAndAnswer.add(answerFields.get(i));
@@ -111,41 +115,147 @@ public class MathGame extends JFrame {
         });
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         buttonsPanel.add(okButton);
+        // buttonsPanel.add(playAgainButton);
         add(buttonsPanel);
         // setVisible(true);
         // Ініціалізуємо кнопку перевірки
         check = new JButton("Check Answers");
         check.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(tasksFrame, "correct answers: " + corrrectAnswers);
-//                for (int i = 0; i < taskLabels.size(); i++) {
-//
-//                    JLabel taskLabel = taskLabels.get(i);
-//                    JTextField answerField = answerFields.get(i);
-//                    String taskText = taskLabel.getText().trim();
-//                    String answer = answerField.getText().trim();
-//
-//                    String[] parts = taskText.split("[+\\-=]");
-//
-//                    int result = Integer.parseInt(parts[0].trim());//////////////////////////////////
-//
-//                    for (int j = 1; j < parts.length; j++) {
-//                        String part = parts[j].trim();
-//                        char sign = taskText.charAt(part.length());
-//                        int num = Integer.parseInt(part);
-//                        if (sign == '+') {
-//                            result += num;
-//                        } else {
-//                            result -= num;
-//                        }
-//                    }
-//
-//                    if (answer.equals(Integer.toString(result))) {
-//                        JOptionPane.showMessageDialog(tasksFrame, "correct");
-//                    } else {
-//                        JOptionPane.showMessageDialog(tasksFrame, "ERROR");
-//                    }
-//                }
+                //checkAnswers();
+                //System.out.println("tasks Label " + taskLabels);
+                for (int i = 0; i < taskLabels.size(); i++) {
+
+                    JLabel taskLabel = taskLabels.get(i);
+                    JTextField answerField = answerFields.get(i);
+                    String taskText = taskLabel.getText().trim();
+                    System.out.println("taskTest getText " + taskText);
+                    String answer = answerField.getText().trim();
+                    System.out.println("answerField answer " + answer);
+
+                    String[] parts = taskText.split("[+\\-=]");
+
+
+                    int firstDodanok = Integer.parseInt(parts[0].trim());//////////////////////////////////
+                    System.out.println("перший доданок " + firstDodanok);
+                    if (parts.length == 2) {
+                        for (int j = 1; j < parts.length; j++) {
+                            String part = parts[j].trim();
+                            //System.out.println("part " + part);
+                            // char[] omg = taskText.toCharArray();
+//                            for (char ch : omg) {
+//                                System.out.println("chars " + ch);
+//                            }
+                            char sign = taskText.charAt(2);
+                            //System.out.println("sign " + sign);
+                            int num = Integer.parseInt(part);
+                            if (sign == '+') {
+                                firstDodanok += num;
+                            } else {
+                                firstDodanok -= num;
+                            }
+                        }
+                    } else if (parts.length == 3) {
+                        System.out.println("3 dodanky");
+
+                        for (String str : parts) {
+                            System.out.println("parts " + str);
+                        }
+
+                        for (int j = 1; j < parts.length; j++) {
+
+                            String part = parts[j].trim();
+
+                            System.out.println("part " + part);
+
+                            char[] omg = taskText.toCharArray();
+
+                            for (char ch : omg) {
+                                System.out.println("chars " + ch);
+                            }
+                            if (j == 1) {
+                                char sign = taskText.charAt(2);
+                                System.out.println("sign1 " + sign);
+                                int num = Integer.parseInt(part);
+                                if (sign == '+') {
+                                    firstDodanok += num;
+                                } else {
+                                    firstDodanok -= num;
+                                }
+                            } else if (j==2) {
+                                char sign = taskText.charAt(6);
+                                System.out.println("sign2 " + sign);
+                                String part3 = parts[j].trim();
+                                System.out.println("part3 " + part3);
+                                int num = Integer.parseInt(part3);
+                                if (sign == '+') {
+                                    firstDodanok += num;
+                                } else {
+                                    firstDodanok -= num;
+                                }
+                            }
+
+                        }
+                    }else{
+                        System.out.println("4 dodanky");
+
+                        for (String str : parts) {
+                            System.out.println("parts " + str);
+                        }
+
+                        for (int j = 1; j < parts.length; j++) {
+
+                            String part = parts[j].trim();
+
+                            System.out.println("part " + part);
+
+                            char[] omg = taskText.toCharArray();
+
+                            for (char ch : omg) {
+                                System.out.println("chars " + ch);
+                            }
+                            if (j == 1) {
+                                char sign = taskText.charAt(2);
+                                System.out.println("sign1 " + sign);
+                                int num = Integer.parseInt(part);
+                                if (sign == '+') {
+                                    firstDodanok += num;
+                                } else {
+                                    firstDodanok -= num;
+                                }
+                            } else if (j==2){
+                                char sign = taskText.charAt(6);
+                                System.out.println("sign2 " + sign);
+                                String part3 = parts[j].trim();
+                                System.out.println("part3 " + part3);
+                                int num = Integer.parseInt(part3);
+                                if (sign == '+') {
+                                    firstDodanok += num;
+                                } else {
+                                    firstDodanok -= num;
+                                }
+                            }else{
+                                char sign = taskText.charAt(10);
+                                System.out.println("ЗНАКККККККК "+ sign);
+                                String part4 = parts[j].trim();
+                                int num = Integer.parseInt(part4);
+                                if (sign == '+') {
+                                    firstDodanok += num;
+                                } else {
+                                    firstDodanok -= num;
+                                }
+                            }
+
+                        }
+                    }
+
+                    if (answer.equals(Integer.toString(firstDodanok))) {
+                        JOptionPane.showMessageDialog(tasksFrame, "task " + (i + 1) + " correct");
+                    } else {
+                        JOptionPane.showMessageDialog(tasksFrame, "task " + (i + 1) + " ERROR");
+                    }
+                }
+
             }
         });
 
@@ -162,6 +272,14 @@ public class MathGame extends JFrame {
         maxNumber = new JTextField(20);
         numOfTasks = new JTextField(20);
 
+//        playAgainButton = new JButton("Грати знову");
+//        playAgainButton.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                // Викликайте метод для початку нової гри
+//                stop();
+//            }
+//        });
+
     }
 
     private void initTwo() {
@@ -175,168 +293,78 @@ public class MathGame extends JFrame {
 
         answer = new JTextField(10);
     }
-
     public void generateTask(int maxNum, int numTasks) {
         Random rNum = new Random();
-
 
         for (int i = 0; i < numTasks; i++) {
             StringBuilder taskBuilder = new StringBuilder();
             int numberOne = rNum.nextInt(0, maxNum + 1);
-
-            // System.out.println("1 num " + numberOne);
             int numberTwo = rNum.nextInt(0, maxNum + 1);
-
-            //System.out.println("2 num " + numberTwo);
             int numberThree = rNum.nextInt(0, maxNum + 1);
+            int numberFour = rNum.nextInt(0, maxNum + 1);
 
-            //System.out.println("3 num " + numberThree);
             int signFirst = rNum.nextInt(0, 2);
-
-            // System.out.println("0 for - " + signFirst);
             int signSecond = rNum.nextInt(0, 2);
+            int signThird = rNum.nextInt(0, 2);
 
-            //System.out.println("0 for - " + signSecond);
-            int numOfNumbers = rNum.nextInt(2, 4);
+            int numOfNumbers = rNum.nextInt(2, 5);
 
-            System.out.println("доданки " + numOfNumbers);
+            int sum = calculateSum(numberOne, numberTwo, numberThree, numberFour, signFirst, signSecond, signThird, numOfNumbers);
 
-            int sum = 0;
-
-            if (signFirst == 0) {
-                sum = numberOne - numberTwo;
-                System.out.println(numberOne + " - " + numberTwo);
-            } else {
-                sum = numberOne + numberTwo;
-                System.out.println(numberOne + " + " + numberTwo);
-            }
-            int newSum = 0;
-            if (numOfNumbers == 3) {
-                if (signSecond == 0) {
-                    newSum = sum - numberThree;
-                    System.out.println(" - " + numberThree);
+            if (sum >= 0 && sum <= maxNum) {
+                taskBuilder.append(numberOne);
+                if (signFirst == 0) {
+                    taskBuilder.append(" - ");
                 } else {
-                    newSum = sum + numberThree;
-                    System.out.println(" + " + numberThree);
+                    taskBuilder.append(" + ");
                 }
-                if (newSum < 0 || newSum > maxNum) {
-                    numTasks++;
-                } else {
-                    System.out.println("sum of three: " + newSum);
+                taskBuilder.append(numberTwo);
 
-                    //String strOne = Integer.toString(numberOne);
-                    //taskOne = new JLabel(strOne);
-
-                    taskBuilder.append(numberOne);
-
-                    if (signFirst == 0) {
-                        //signOne = new JLabel(" - ");
-                        taskBuilder.append(" - ");
-                    } else {
-                        // signOne = new JLabel(" + ");
-                        taskBuilder.append(" + ");
-                    }
-                    //String strTwo = Integer.toString(numberTwo);
-                    //taskTwo = new JLabel(strTwo);
-                    taskBuilder.append(numberTwo);
+                if (numOfNumbers >= 3) {
                     if (signSecond == 0) {
-                        //signTwo = new JLabel(" - ");
-                        taskBuilder.append(" - ");
-
+                        taskBuilder.append(" - ").append(numberThree);
                     } else {
-                        //signTwo = new JLabel(" + ");
-                        taskBuilder.append(" + ");
-
+                        taskBuilder.append(" + ").append(numberThree);
                     }
-                    //String strThree = Integer.toString(numberThree);
-                    // taskThree = new JLabel(strThree);
-                    taskBuilder.append(numberThree);
-                    taskBuilder.append(" = ");
-                    JTextField answerField = new JTextField(5);
-                    answerFields.add(answerField);
-                    JLabel taskLabel = new JLabel(taskBuilder.toString());
-                    taskLabels.add(taskLabel);
-                    String str = answerField.getText();
-                    if(Integer.valueOf(str) == newSum){
-                        corrrectAnswers++;
-                    }
-//                    JTextField answerField = new JTextField(5);
-//                    answerFields.add(answerField);
-                    //mouse listeners todo
-                    ////
-                    /*
-                    ///////////////////////////////////////////////////////
-                    check = new JButton("OK");
-                    check.setBackground(Color.GREEN);
-                    check.setLocation(100, 200);
-                    tasksFrame.add(check);
-                    check.setVisible(true);
-                    /////////////////////////////////////////////////
-                    int finalNewSum = newSum;
-                    check.addActionListener(new ActionListener() {
-
-                        public void actionPerformed(ActionEvent e) {
-                            String ans = answer.getText();
-
-
-                            if (ans.equals(Integer.toString(finalNewSum))) {
-                                JOptionPane.showMessageDialog(tasksFrame, "правильно");
-                            } else {
-                                JOptionPane.showMessageDialog(tasksFrame, "ERROR");
-                            }
-                        }
-                    });
-                    //JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-                   // buttonPanel.add(check);
-
-                    ////
-
-                     */
-
                 }
-            } else {
-                if (sum < 0 || sum > maxNum) {
-                    numTasks++;
-                } else {
-                    System.out.println("sum: " + sum);
-                    //String strOne = Integer.toString(numberOne);
-                    // taskOne = new JLabel(strOne);
-                    taskBuilder.append(numberOne);
-
-                    if (signFirst == 0) {
-                        //signOne = new JLabel(" - ");
-                        taskBuilder.append(" - ");
-
+                if (numOfNumbers == 4) {
+                    if (signThird == 0) {
+                        taskBuilder.append(" - ").append(numberFour);
                     } else {
-                        //signOne = new JLabel(" + ");
-                        taskBuilder.append(" + ");
-
+                        taskBuilder.append(" + ").append(numberFour);
                     }
-                    //String strTwo = Integer.toString(numberTwo);
-                    //taskTwo = new JLabel(strTwo);
-                    taskBuilder.append(numberTwo);
-                    taskBuilder.append(" = ");
-
-                    JTextField answerField = new JTextField(5);
-                    answerFields.add(answerField);
-                    JLabel taskLabel = new JLabel(taskBuilder.toString());
-                    taskLabels.add(taskLabel);
-                    String str = answerField.getText();
-                    if(Integer.valueOf(str) == sum){
-                        corrrectAnswers++;
-                    }
-                    //signTwo = new JLabel(" ");
-                    //taskThree = new JLabel(" ");
-                    //mouse listeners todo
-//                    if (answer.getText().equals(Integer.valueOf(sum))) {
-//                        equalSign.setBackground(Color.YELLOW);
-//                    }
                 }
+                taskBuilder.append(" = ");
+
+                JTextField answerField = new JTextField(5);
+                answerFields.add(answerField);
+                JLabel taskLabel = new JLabel(taskBuilder.toString());
+                taskLabels.add(taskLabel);
+            }else{
+                numTasks++;
             }
-            //taskBuilder.append(" = ");
-
         }
     }
+
+    private int calculateSum(int num1, int num2, int num3, int num4, int sign1, int sign2, int sign3, int numOfNumbers) {
+        int sum = (sign1 == 0) ? num1 - num2 : num1 + num2;
+
+        if (numOfNumbers >= 3) {
+            sum = (sign2 == 0) ? sum - num3 : sum + num3;
+        }
+        if (numOfNumbers == 4) {
+            sum = (sign3 == 0) ? sum - num4 : sum + num4;
+        }
+        return sum;
+    }
+
+
+    private void checkAnswers() {
+
+    }
+
+
+
 
     /*
         public static void randomTask(int maxNum, int numTasks) {
@@ -413,5 +441,25 @@ public class MathGame extends JFrame {
         return false;
     }
 
+    private void stop() {
+        this.getContentPane().removeAll();
+//        taskPanel.removeAll();
+//        taskAndAnswer.removeAll();
+//        tasksFrame.removeAll();
+//        //tasksFrame.dispose();
+//
+//        maxNumber.setText("");
+//        numOfTasks.setText("");
+//        answer.setText("");
+//        taskLabels.clear();
+//        answerFields.clear();
+//        corrrectAnswers = 0;
+//
+//
+//        generateTask(maxN, tN);
+//
+//        validate();
+//        repaint();
+    }
 
 }
